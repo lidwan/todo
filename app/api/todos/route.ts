@@ -46,7 +46,7 @@ export async function POST(req: Request) {
     }
   );
 
-  const { data, error } = await supabase.from("todos").insert([{ todo_content, auth_id: userId }]);
+  const { error } = await supabase.from("todos").insert([{ todo_content, auth_id: userId }]);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
 

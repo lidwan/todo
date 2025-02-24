@@ -86,13 +86,20 @@ export default function Dashboard() {
 
   const handleCompleteButton = async (uuid: string) => {
     setCompletingTodoId(uuid);
-    // TODO
+  
+    const completedAt = new Date().toISOString();
+      const res = await fetch("/api/todos", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ todoId: uuid, is_completed: true, completed_at: completedAt }),
+    });
   
     if (res.ok) {
       fetchTodos();
-    }
+    }  
     setCompletingTodoId(null);
   };
+  
 
   return (
     <div className="flex flex-col">

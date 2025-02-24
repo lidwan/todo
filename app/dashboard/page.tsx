@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { NewTodoForm } from "@/components/NewTodoForm";
 import LoadingState from "@/components/LoadingState";
-import EditTodoButton from "@/components/CompleteTodoButton";
 import DeleteTodoButton from "@/components/DeleteTodoButton.";
 import { toHumanReadbleDate } from "@/lib/toHumanReadbleDate";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
+import CompleteTodoButton from "@/components/CompleteTodoButton";
 
 interface Todo {
   uuid: string;
@@ -22,7 +22,9 @@ export default function Dashboard() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAddButtonLoading, setAddButtonLoading] = useState(false);
+  const [completingTodoId, setCompletingTodoId] = useState<string | null>(null);
   const [deletingTodoId, setDeletingTodoId] = useState<string | null>(null);
+
   const [showCompleted, setShowCompleted] = useState(false);
 
   function handleToggle () {
@@ -38,6 +40,7 @@ export default function Dashboard() {
   }, [showCompleted]);
   
   const fetchTodos = async () => {
+    setIsLoading(true);
     const res = await fetch("/api/todos");
     if (res.ok) {
       const data = await res.json();
@@ -81,6 +84,16 @@ export default function Dashboard() {
     setDeletingTodoId(null);
   };
 
+  const handleCompleteButton = async (uuid: string) => {
+    setCompletingTodoId(uuid);
+    // TODO
+  
+    if (res.ok) {
+      fetchTodos();
+    }
+    setCompletingTodoId(null);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col gap-4 justify-center items-center">
@@ -109,7 +122,9 @@ export default function Dashboard() {
                   <div className="text-muted-foreground text-xs">{todo.completed_at && "Completed: "+toHumanReadbleDate(todo.completed_at)}</div>
                 </div>
                   <div className="flex flex-col gap-2">
-                    <EditTodoButton />
+                    <div onClick={() => handleCompleteButton(todo.uuid)}>
+                        {completingTodoId === todo.uuid ? <div className="justify-self-center"><Loader2 className="animate-spin" /></div> : <CompleteTodoButton />}
+                    </div>
                     <div onClick={() => handleDeleteButton(todo.uuid)}>
                         {deletingTodoId === todo.uuid ? <div className="justify-self-center"><Loader2 className="animate-spin" /></div> : <DeleteTodoButton />}
                     </div>

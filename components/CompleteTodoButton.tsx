@@ -2,7 +2,7 @@ import { CheckCheck } from "lucide-react"
 import { Button } from "./ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 
-function EditTodoButton() {
+function CompleteTodoButton() {
   return (
     <div>
     <TooltipProvider>
@@ -18,4 +18,4 @@ function EditTodoButton() {
   </div>
   )
 }
-export default EditTodoButton
+export default CompleteTodoButton

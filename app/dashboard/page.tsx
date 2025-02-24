@@ -29,7 +29,7 @@ export default function Dashboard() {
     const res = await fetch("/api/todos");
     if (res.ok) {
       const data = await res.json();
-      setTodos(data);
+      setTodos(data.toReversed());
     } else {
       console.error("Failed to fetch todos");
     }

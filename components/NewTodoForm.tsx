@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -23,10 +23,13 @@ const formSchema = z.object({
 
 interface NewTodoFormProps {
   onSubmit: (values: z.infer<typeof formSchema>) => void; // Prop type for onSubmit function
-  isAddButtonLoading: boolean
+  isAddButtonLoading: boolean;
 }
 
-export function NewTodoForm({ onSubmit, isAddButtonLoading }: NewTodoFormProps) {
+export function NewTodoForm({
+  onSubmit,
+  isAddButtonLoading,
+}: NewTodoFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,7 +39,9 @@ export function NewTodoForm({ onSubmit, isAddButtonLoading }: NewTodoFormProps) 
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-[40vw]">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4 w-[40vw]">
         <FormField
           control={form.control}
           name="todoContent"
@@ -50,8 +55,16 @@ export function NewTodoForm({ onSubmit, isAddButtonLoading }: NewTodoFormProps) 
             </FormItem>
           )}
         />
-        {isAddButtonLoading ? (<Button variant={"outline"} disabled><Loader2 className="animate-spin"/>Please wait</Button>) : (<Button type="submit" variant={"outline"}>Add Todo</Button>)}
-        
+        {isAddButtonLoading ? (
+          <Button variant={"outline"} disabled>
+            <Loader2 className="animate-spin" />
+            Please wait
+          </Button>
+        ) : (
+          <Button type="submit" variant={"outline"}>
+            Add Todo
+          </Button>
+        )}
       </form>
     </Form>
   );

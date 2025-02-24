@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import { NewTodoForm } from "@/components/NewTodoForm";
@@ -27,8 +27,10 @@ export default function Dashboard() {
 
   const [showCompleted, setShowCompleted] = useState(false);
 
-  function handleToggle () {
-    showCompleted ? setTodos(todos.filter((todo) => todo.is_completed)) : fetchTodos();
+  function handleToggle() {
+    showCompleted
+      ? setTodos(todos.filter((todo) => todo.is_completed))
+      : fetchTodos();
   }
 
   useEffect(() => {
@@ -38,14 +40,20 @@ export default function Dashboard() {
   useEffect(() => {
     handleToggle();
   }, [showCompleted]);
-  
+
   const fetchTodos = async () => {
     setIsLoading(true);
     const res = await fetch("/api/todos");
     if (res.ok) {
       const data = await res.json();
-      setTodos(data.toReversed().sort((a: Todo, b: Todo) => Number(a.is_completed) - Number(b.is_completed)));
-
+      setTodos(
+        data
+          .toReversed()
+          .sort(
+            (a: Todo, b: Todo) =>
+              Number(a.is_completed) - Number(b.is_completed)
+          )
+      );
     } else {
       console.error("Failed to fetch todos");
     }
@@ -77,7 +85,7 @@ export default function Dashboard() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ todoId: uuid }),
     });
-  
+
     if (res.ok) {
       fetchTodos();
     }
@@ -86,30 +94,40 @@ export default function Dashboard() {
 
   const handleCompleteButton = async (uuid: string) => {
     setCompletingTodoId(uuid);
-  
+
     const completedAt = new Date().toISOString();
-      const res = await fetch("/api/todos", {
+    const res = await fetch("/api/todos", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ todoId: uuid, is_completed: true, completed_at: completedAt }),
+      body: JSON.stringify({
+        todoId: uuid,
+        is_completed: true,
+        completed_at: completedAt,
+      }),
     });
-  
+
     if (res.ok) {
       fetchTodos();
-    }  
+    }
     setCompletingTodoId(null);
   };
-  
 
   return (
     <div className="flex flex-col">
       <div className="flex flex-col gap-4 justify-center items-center">
         <h1 className="text-3xl font-bold">Your Todos</h1>
-        <NewTodoForm onSubmit={handleAddTodo} isAddButtonLoading={isAddButtonLoading}/>
+        <NewTodoForm
+          onSubmit={handleAddTodo}
+          isAddButtonLoading={isAddButtonLoading}
+        />
       </div>
 
       <div className="flex items-center space-x-2 self-center mt-10">
-        <Switch id="only-completed" checked={showCompleted} onCheckedChange={setShowCompleted}/>
+        <Switch
+          id="only-completed"
+          checked={showCompleted}
+          onCheckedChange={setShowCompleted}
+        />
         <Label htmlFor="only-completed">Only Show completed Todos</Label>
       </div>
 
@@ -122,22 +140,50 @@ export default function Dashboard() {
           <div className="w-3/4 md:w-1/2 flex flex-col gap-6">
             {todos.length > 0 ? (
               todos.map((todo) => (
-              <div key={todo.uuid} className="flex items-center justify-between gap-8 bg-primary-foreground min-h-[100px] p-4 rounded-lg ">
-                <div className="flex flex-col justify-between  gap-1">
-                  <div className={todo.is_completed ? "text-green-700 font-bold" : "font-bold"}>{todo.todo_content}</div>
-                  <div className="text-muted-foreground text-xs">Created: {toHumanReadbleDate(todo.created_at)}</div>
-                  <div className="text-muted-foreground text-xs">{todo.completed_at && "Completed: "+toHumanReadbleDate(todo.completed_at)}</div>
-                </div>
-                  <div className="flex flex-col gap-2">
-                    <div onClick={() => handleCompleteButton(todo.uuid)}>
-                        {!todo.is_completed && (completingTodoId === todo.uuid ? <div className="justify-self-center"><Loader2 className="animate-spin" /></div> : <CompleteTodoButton />)}
+                <div
+                  key={todo.uuid}
+                  className="flex items-center justify-between gap-8 bg-primary-foreground min-h-[100px] p-4 rounded-lg ">
+                  <div className="flex flex-col justify-between  gap-1">
+                    <div
+                      className={
+                        todo.is_completed
+                          ? "text-green-700 font-bold"
+                          : "font-bold"
+                      }>
+                      {todo.todo_content}
                     </div>
-                    <div onClick={() => handleDeleteButton(todo.uuid)}>
-                        {deletingTodoId === todo.uuid ? <div className="justify-self-center"><Loader2 className="animate-spin" /></div> : <DeleteTodoButton />}
+                    <div className="text-muted-foreground text-xs">
+                      Created: {toHumanReadbleDate(todo.created_at)}
+                    </div>
+                    <div className="text-muted-foreground text-xs">
+                      {todo.completed_at &&
+                        "Completed: " + toHumanReadbleDate(todo.completed_at)}
                     </div>
                   </div>
-              </div>
-            ))) : ( showCompleted ?(
+                  <div className="flex flex-col gap-2">
+                    <div onClick={() => handleCompleteButton(todo.uuid)}>
+                      {!todo.is_completed &&
+                        (completingTodoId === todo.uuid ? (
+                          <div className="justify-self-center">
+                            <Loader2 className="animate-spin" />
+                          </div>
+                        ) : (
+                          <CompleteTodoButton />
+                        ))}
+                    </div>
+                    <div onClick={() => handleDeleteButton(todo.uuid)}>
+                      {deletingTodoId === todo.uuid ? (
+                        <div className="justify-self-center">
+                          <Loader2 className="animate-spin" />
+                        </div>
+                      ) : (
+                        <DeleteTodoButton />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : showCompleted ? (
               <div className="self-center">
                 No Completed Todos yet, Mark a Todo as completed!
               </div>
@@ -145,8 +191,7 @@ export default function Dashboard() {
               <div className="self-center">
                 No Todos added yet, Add a new Todo!
               </div>
-            ))
-            }
+            )}
           </div>
         )}
       </div>

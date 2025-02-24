@@ -27,28 +27,28 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <header className="flex justify-between items-center p-4 h-16">
-            <Link href="/" className='font-black'>Todo by Loay</Link>
-            <div className='flex justify-end items-center gap-4'> 
-              <ModeToggle />
-              <SignedOut>
-                <Button variant="outline" asChild>
-                  <SignInButton />
-                </Button>
-              </SignedOut>
-              <SignedIn>
-                <Button variant="outline" asChild>
-                <Link href="/dashboard" className='font-bold'>Dashboard</Link>
-                </Button>
-                <UserButton />
-              </SignedIn>
-            </div>
+          <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+            <header className="flex justify-between items-center p-8 h-20">
+              <Link href="/" className='font-black'>Todo by Loay</Link>
+              <div className='flex justify-end items-center gap-4'> 
+                <ModeToggle />
+                <SignedOut>
+                  <Button variant="outline" asChild>
+                    <SignInButton />
+                  </Button>
+                </SignedOut>
+                <SignedIn>
+                  <Button variant="outline" asChild>
+                  <Link href="/dashboard" className='font-bold'>Dashboard</Link>
+                  </Button>
+                  <UserButton />
+                </SignedIn>
+              </div>
             </header>
             {children}
           </ThemeProvider>

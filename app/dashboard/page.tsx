@@ -130,7 +130,7 @@ export default function Dashboard() {
                 </div>
                   <div className="flex flex-col gap-2">
                     <div onClick={() => handleCompleteButton(todo.uuid)}>
-                        {completingTodoId === todo.uuid ? <div className="justify-self-center"><Loader2 className="animate-spin" /></div> : <CompleteTodoButton />}
+                        {!todo.is_completed && (completingTodoId === todo.uuid ? <div className="justify-self-center"><Loader2 className="animate-spin" /></div> : <CompleteTodoButton />)}
                     </div>
                     <div onClick={() => handleDeleteButton(todo.uuid)}>
                         {deletingTodoId === todo.uuid ? <div className="justify-self-center"><Loader2 className="animate-spin" /></div> : <DeleteTodoButton />}

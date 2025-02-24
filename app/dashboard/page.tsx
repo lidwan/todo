@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import { NewTodoForm } from "@/components/NewTodoForm";
 import LoadingState from "@/components/LoadingState";
-import EditTodoButton from "@/components/EditTodoButton";
+import EditTodoButton from "@/components/CompleteTodoButton";
 import DeleteTodoButton from "@/components/DeleteTodoButton.";
+import { toHumanReadbleDate } from "@/lib/toHumanReadbleDate";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface Todo {
   uuid: string;
@@ -20,10 +23,19 @@ export default function Dashboard() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAddButtonLoading, setAddButtonLoading] = useState(false);
+  const [showCompleted, setShowCompleted] = useState(false);
+
+  function handleToggle () {
+    showCompleted ? setTodos(todos.filter((todo) => todo.is_completed)) : fetchTodos();
+  }
 
   useEffect(() => {
     fetchTodos();
   }, []);
+
+  useEffect(() => {
+    handleToggle();
+  }, [showCompleted]);
   
   const fetchTodos = async () => {
     const res = await fetch("/api/todos");
@@ -56,11 +68,17 @@ export default function Dashboard() {
     }
   };
 
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col gap-4 justify-center items-center">
         <h1 className="text-3xl font-bold">Your Todos</h1>
         <NewTodoForm onSubmit={handleAddTodo} isAddButtonLoading={isAddButtonLoading}/>
+      </div>
+
+      <div className="flex items-center space-x-2 self-center mt-10">
+        <Switch id="only-completed" checked={showCompleted} onCheckedChange={setShowCompleted}/>
+        <Label htmlFor="only-completed">Only Show completed Todos</Label>
       </div>
 
       <div className=" flex flex-col justify-center items-center mt-10 mb-10">
@@ -72,9 +90,13 @@ export default function Dashboard() {
           <div className="w-3/4 md:w-1/2 flex flex-col gap-6">
             {todos.length > 0 ? (
               todos.map((todo) => (
-              <div key={todo.uuid} className="flex items-center justify-between gap-8 bg-card">
-                <div className="w">{todo.todo_content}</div>
-                  <div className="flex gap-2">
+              <div key={todo.uuid} className="flex items-center justify-between gap-8 bg-primary-foreground min-h-[100px] p-4 rounded-lg ">
+                <div className="flex flex-col justify-between  gap-1">
+                  <div className="font-semibold">{todo.todo_content}</div>
+                  <div className="text-muted-foreground text-xs">Created: {toHumanReadbleDate(todo.created_at)}</div>
+                  <div className="text-muted-foreground text-xs">{todo.updated_at && "Last Update: "+toHumanReadbleDate(todo.updated_at)}</div>
+                </div>
+                  <div className="flex flex-col gap-2">
                     <EditTodoButton />
                     <DeleteTodoButton />
                   </div>

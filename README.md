@@ -1,5 +1,5 @@
 # Todo
-
+<br><img src="public/todo.png" />
 This is a simple Todo web app built with:
 
 - **Next.js**

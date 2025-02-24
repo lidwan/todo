@@ -111,7 +111,7 @@ export default function Dashboard() {
                   <div className="flex flex-col gap-2">
                     <EditTodoButton />
                     <div onClick={() => handleDeleteButton(todo.uuid)}>
-                        {deletingTodoId === todo.uuid ? <Loader2 className="animate-spin" /> : <DeleteTodoButton />}
+                        {deletingTodoId === todo.uuid ? <div className="justify-self-center"><Loader2 className="animate-spin" /></div> : <DeleteTodoButton />}
                     </div>
                   </div>
               </div>

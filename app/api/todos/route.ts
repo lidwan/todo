@@ -52,3 +52,31 @@ export async function POST(req: Request) {
 
   return NextResponse.json(req);
 }
+
+
+export async function DELETE(req: Request) {
+  const { userId, getToken } = await auth();
+  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { todoId } = await req.json();
+  if (!todoId) return NextResponse.json({ error: "Todo ID is required" }, { status: 400 });
+
+  const supabaseToken = await getToken({ template: "supabase" });
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      global: {
+        headers: {
+          Authorization: `Bearer ${supabaseToken}`,
+        },
+      }
+    }
+  );
+
+  const { error } = await supabase.from("todos").delete().eq("uuid", todoId).eq("auth_id", userId);
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+
+  return NextResponse.json({ message: "Todo deleted successfully" });
+}

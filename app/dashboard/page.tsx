@@ -130,11 +130,16 @@ export default function Dashboard() {
                     </div>
                   </div>
               </div>
-            ))) : (
+            ))) : ( showCompleted ?(
+              <div className="self-center">
+                No Completed Todos yet, Mark a Todo as completed!
+              </div>
+            ) : (
               <div className="self-center">
                 No Todos added yet, Add a new Todo!
               </div>
-            )}
+            ))
+            }
           </div>
         )}
       </div>

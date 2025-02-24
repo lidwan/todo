@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   ClerkProvider,
   SignInButton,
@@ -12,9 +11,26 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/ModeToggle";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Todo by Loay",
-  description: "A todo web app.",
+export const metadata = {
+  title: "Todo By Loay",
+  description: "A simple Todo web app.",
+  creator: 'Loay Idwan',
+  openGraph: {
+    title: "Todo By Loay",
+    siteName: "Todo By Loay",
+    description: "A simple Todo web app.",
+    url: "https://todo.loayidwan.com",
+    type: "website",
+    images: [
+      {
+        url: 'https://todo.loayidwan.com/todo.png',
+        width: 1200,
+        height: 630,
+        alt: "Website for A simple Todo web app."
+      }
+    ]
+  },
+  canonical: "https://todo.loayidwan.com",
 };
 
 export default function RootLayout({

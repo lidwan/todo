@@ -1,4 +1,4 @@
-import { Pencil } from "lucide-react"
+import { CheckCheck } from "lucide-react"
 import { Button } from "./ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 
@@ -8,10 +8,10 @@ function EditTodoButton() {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant={"outline"}><Pencil /></Button>
+          <Button variant={"outline"}><CheckCheck /></Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p className="font-bold">Edit Todo</p>
+          <p className="font-bold">Complete Todo</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

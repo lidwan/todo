@@ -28,9 +28,11 @@ export default function Dashboard() {
   const [showCompleted, setShowCompleted] = useState(false);
 
   function handleToggle() {
-    showCompleted
-      ? setTodos(todos.filter((todo) => todo.is_completed))
-      : fetchTodos();
+    if (showCompleted) {
+      setTodos(todos.filter((todo) => todo.is_completed));
+    } else {
+      fetchTodos();
+    }
   }
 
   useEffect(() => {

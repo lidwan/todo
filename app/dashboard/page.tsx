@@ -66,15 +66,7 @@ export default function Dashboard() {
       <div className=" flex flex-col justify-center items-center mt-10">
         {isLoading ? (
           <div className="space-y-4 w-3/4 md:w-1/2 flex flex-col justify-center items-center">
-            <Skeleton className="h-4 w-[85%]" />
-            <Skeleton className="h-5 w-[70%]" />
-            <Skeleton className="h-4 w-[65%]" />
-            <Skeleton className="h-4 w-[85%]" />
-            <Skeleton className="h-5 w-[55%]" />
-            <Skeleton className="h-4 w-[65%]" />
-            <Skeleton className="h-4 w-[85%]" />
-            <Skeleton className="h-5 w-[70%]" />
-            <Skeleton className="h-4 w-[50%]" />
+            <LoadingState />
           </div>
         ) : (
           <div className="w-3/4 md:w-1/2 flex flex-col gap-6">

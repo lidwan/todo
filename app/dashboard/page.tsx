@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { NewTodoForm } from "@/components/NewTodoForm";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { Pencil, Trash2 } from "lucide-react";
+import LoadingState from "@/components/LoadingState";
+import EditTodoButton from "@/components/EditTodoButton";
+import DeleteTodoButton from "@/components/DeleteTodoButton.";
 
 interface Todo {
   uuid: string;
@@ -59,11 +59,11 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col">
       <div className="flex flex-col gap-4 justify-center items-center">
-        <h1 className="text-3xl">Your Todos</h1>
+        <h1 className="text-3xl font-bold">Your Todos</h1>
         <NewTodoForm onSubmit={handleAddTodo} isAddButtonLoading={isAddButtonLoading}/>
       </div>
 
-      <div className=" flex flex-col justify-center items-center mt-10">
+      <div className=" flex flex-col justify-center items-center mt-10 mb-10">
         {isLoading ? (
           <div className="space-y-4 w-3/4 md:w-1/2 flex flex-col justify-center items-center">
             <LoadingState />
@@ -75,12 +75,8 @@ export default function Dashboard() {
               <div key={todo.uuid} className="flex items-center justify-between gap-8 bg-card">
                 <div className="w">{todo.todo_content}</div>
                   <div className="flex gap-2">
-                    <div className="">
-                    <Button variant={"outline"}><Pencil /></Button>
-                  </div>
-                  <div className="">
-                    <Button variant={"outline"}><Trash2 /></Button>
-                  </div>
+                    <EditTodoButton />
+                    <DeleteTodoButton />
                   </div>
               </div>
             ))) : (

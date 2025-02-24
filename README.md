@@ -31,4 +31,6 @@ Each user can:
 
 ## Todo (pun intended):
 
-- Deploy a working version to production
+- Implement end-to-end encryption
+- Add ability to edit Todo contents
+- Fix Google / GitHub sign-up

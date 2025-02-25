@@ -33,4 +33,3 @@ Each user can:
 
 - Implement end-to-end encryption
 - Add ability to edit Todo contents
-- Fix Google / GitHub sign-up

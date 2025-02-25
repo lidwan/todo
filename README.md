@@ -32,4 +32,4 @@ Each user can:
 ## Todo (pun intended):
 
 - Implement end-to-end encryption
-- Add ability to edit Todo contents
+- Make a logo

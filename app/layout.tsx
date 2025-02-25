@@ -55,7 +55,7 @@ export default function RootLayout({
                 <ModeToggle />
                 <SignedOut>
                   <Button variant="outline" asChild>
-                    <SignInButton />
+                    <SignInButton forceRedirectUrl={"/dashboard"} />
                   </Button>
                 </SignedOut>
                 <SignedIn>

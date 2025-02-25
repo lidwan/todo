@@ -31,5 +31,7 @@ Each user can:
 
 ## Todo (pun intended):
 
-- Implement end-to-end encryption
+- Improve home page UI
+- Add footer
 - Make a logo
+- Implement encryption for Todo content

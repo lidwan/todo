@@ -102,11 +102,9 @@ export async function PATCH(req: Request) {
   if (!userId)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { todoId } = await req.json();
+  const { todoId, completed_at, updated_at, todo_content } = await req.json();
   if (!todoId)
     return NextResponse.json({ error: "Todo ID is required" }, { status: 400 });
-
-  const completedAt = new Date().toISOString();
 
   const supabaseToken = await getToken({ template: "supabase" });
   const supabase = createClient(
@@ -121,17 +119,32 @@ export async function PATCH(req: Request) {
     }
   );
 
-  const { error } = await supabase
-    .from("todos")
-    .update({ is_completed: true, completed_at: completedAt })
-    .eq("uuid", todoId)
-    .eq("auth_id", userId)
-    .eq("is_completed", false);
+  if (todo_content) {
+    const { error } = await supabase
+      .from("todos")
+      .update({ todo_content: todo_content, updated_at: updated_at })
+      .eq("uuid", todoId)
+      .eq("auth_id", userId);
 
-  if (error)
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    if (error)
+      return NextResponse.json({ error: error.message }, { status: 400 });
 
-  return NextResponse.json({
-    message: "Todo marked as completed successfully",
-  });
+    return NextResponse.json({
+      message: "Todo Edited successfully",
+    });
+  } else {
+    const { error } = await supabase
+      .from("todos")
+      .update({ is_completed: true, completed_at: completed_at })
+      .eq("uuid", todoId)
+      .eq("auth_id", userId)
+      .eq("is_completed", false);
+
+    if (error)
+      return NextResponse.json({ error: error.message }, { status: 400 });
+
+    return NextResponse.json({
+      message: "Todo marked as completed successfully",
+    });
+  }
 }

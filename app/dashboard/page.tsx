@@ -17,6 +17,7 @@ interface Todo {
   created_at: string;
   completed_at: string | null;
   is_completed: boolean;
+  updated_at: string | null;
 }
 
 export default function Dashboard() {
@@ -182,6 +183,10 @@ export default function Dashboard() {
                       Created: {toHumanReadbleDate(todo.created_at)}
                     </div>
                     <div className="text-muted-foreground text-xs">
+                      {todo.updated_at &&
+                        "Last Edited: " + toHumanReadbleDate(todo.updated_at)}
+                    </div>
+                    <div className="text-muted-foreground text-xs">
                       {todo.completed_at &&
                         "Completed: " + toHumanReadbleDate(todo.completed_at)}
                     </div>
@@ -214,7 +219,9 @@ export default function Dashboard() {
                           <Loader2 className="animate-spin" />
                         </div>
                       ) : (
-                        <DeleteTodoButton />
+                        <div className="w-[100%] flex flex-col justify-center items-center">
+                          <DeleteTodoButton />
+                        </div>
                       )}
                     </div>
                   </div>

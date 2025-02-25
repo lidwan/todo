@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import CompleteTodoButton from "@/components/CompleteTodoButton";
+import EditTodoButton from "@/components/EditTodoButton";
 
 interface Todo {
   uuid: string;
@@ -22,6 +23,7 @@ export default function Dashboard() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAddButtonLoading, setAddButtonLoading] = useState(false);
+  const [isEditButtonLoading, setEditButtonLoading] = useState(false);
   const [completingTodoId, setCompletingTodoId] = useState<string | null>(null);
   const [deletingTodoId, setDeletingTodoId] = useState<string | null>(null);
 
@@ -114,6 +116,12 @@ export default function Dashboard() {
     setCompletingTodoId(null);
   };
 
+  const handleEditTodo = async (values: { todoContent: string }) => {
+    setEditButtonLoading(true);
+    //TODO
+    setEditButtonLoading(false);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col gap-4 justify-center items-center">
@@ -172,6 +180,15 @@ export default function Dashboard() {
                         ) : (
                           <CompleteTodoButton />
                         ))}
+                    </div>
+                    <div>
+                      {!todo.is_completed && (
+                        <EditTodoButton
+                          currentTodoContent={todo.todo_content}
+                          isEditButtonLoading={isEditButtonLoading}
+                          onSubmit={handleEditTodo}
+                        />
+                      )}
                     </div>
                     <div onClick={() => handleDeleteButton(todo.uuid)}>
                       {deletingTodoId === todo.uuid ? (

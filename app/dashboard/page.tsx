@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import CompleteTodoButton from "@/components/CompleteTodoButton";
+import EditTodoButton from "@/components/EditTodoButton";
 
 interface Todo {
   uuid: string;
@@ -16,12 +17,14 @@ interface Todo {
   created_at: string;
   completed_at: string | null;
   is_completed: boolean;
+  updated_at: string | null;
 }
 
 export default function Dashboard() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAddButtonLoading, setAddButtonLoading] = useState(false);
+  const [isEditButtonLoading, setEditButtonLoading] = useState(false);
   const [completingTodoId, setCompletingTodoId] = useState<string | null>(null);
   const [deletingTodoId, setDeletingTodoId] = useState<string | null>(null);
 
@@ -114,6 +117,28 @@ export default function Dashboard() {
     setCompletingTodoId(null);
   };
 
+  const handleEditTodo = async (
+    values: { todoContent: string },
+    uuid: string
+  ) => {
+    setEditButtonLoading(true);
+    const updatedAt = new Date().toISOString();
+    const res = await fetch("/api/todos", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        todoId: uuid,
+        todo_content: values.todoContent,
+        updated_at: updatedAt,
+      }),
+    });
+
+    if (res.ok) {
+      fetchTodos();
+    }
+    setEditButtonLoading(false);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col gap-4 justify-center items-center">
@@ -158,6 +183,10 @@ export default function Dashboard() {
                       Created: {toHumanReadbleDate(todo.created_at)}
                     </div>
                     <div className="text-muted-foreground text-xs">
+                      {todo.updated_at &&
+                        "Last Edited: " + toHumanReadbleDate(todo.updated_at)}
+                    </div>
+                    <div className="text-muted-foreground text-xs">
                       {todo.completed_at &&
                         "Completed: " + toHumanReadbleDate(todo.completed_at)}
                     </div>
@@ -172,6 +201,17 @@ export default function Dashboard() {
                         ) : (
                           <CompleteTodoButton />
                         ))}
+                    </div>
+                    <div>
+                      {!todo.is_completed && (
+                        <EditTodoButton
+                          currentTodoContent={todo.todo_content}
+                          isEditButtonLoading={isEditButtonLoading}
+                          onSubmit={(values: { todoContent: string }) =>
+                            handleEditTodo(values, todo.uuid)
+                          }
+                        />
+                      )}
                     </div>
                     <div onClick={() => handleDeleteButton(todo.uuid)}>
                       {deletingTodoId === todo.uuid ? (

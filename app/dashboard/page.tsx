@@ -116,9 +116,25 @@ export default function Dashboard() {
     setCompletingTodoId(null);
   };
 
-  const handleEditTodo = async (values: { todoContent: string }) => {
+  const handleEditTodo = async (
+    values: { todoContent: string },
+    uuid: string
+  ) => {
     setEditButtonLoading(true);
-    //TODO
+    const updatedAt = new Date().toISOString();
+    const res = await fetch("/api/todos", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        todoId: uuid,
+        todo_content: values.todoContent,
+        updated_at: updatedAt,
+      }),
+    });
+
+    if (res.ok) {
+      fetchTodos();
+    }
     setEditButtonLoading(false);
   };
 
@@ -186,7 +202,9 @@ export default function Dashboard() {
                         <EditTodoButton
                           currentTodoContent={todo.todo_content}
                           isEditButtonLoading={isEditButtonLoading}
-                          onSubmit={handleEditTodo}
+                          onSubmit={(values: { todoContent: string }) =>
+                            handleEditTodo(values, todo.uuid)
+                          }
                         />
                       )}
                     </div>

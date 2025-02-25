@@ -27,22 +27,23 @@ function EditTodoButton({
   return (
     <div>
       <Popover>
-        <PopoverTrigger>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant={"outline"}>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <PopoverTrigger asChild>
+                <Button variant="outline">
                   <Pencil />
                 </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="font-bold">Edit Todo</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </PopoverTrigger>
+              </PopoverTrigger>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="font-bold">Edit Todo</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         <PopoverContent>
-          <div className="">
+          <div>
             <EditTodoForm
               currentTodoContent={currentTodoContent}
               onSubmit={onSubmit}

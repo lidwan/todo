@@ -41,7 +41,7 @@ export function NewTodoForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 w-[40vw]">
+        className="space-y-4 w-[100%]">
         <FormField
           control={form.control}
           name="todoContent"

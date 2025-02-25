@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import CompleteTodoButton from "@/components/CompleteTodoButton";
 import EditTodoButton from "@/components/EditTodoButton";
+import Footer from "@/components/Footer";
 
 interface Todo {
   uuid: string;
@@ -140,16 +141,19 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col justify-between mt-4 h-[90vh]">
+      <div>
       <div className="flex flex-col gap-4 justify-center items-center">
         <h1 className="text-3xl font-bold">Your Todos</h1>
-        <NewTodoForm
-          onSubmit={handleAddTodo}
-          isAddButtonLoading={isAddButtonLoading}
-        />
+        <div className="w-3/4 md:w-[50vw] flex justify-center items-center">
+          <NewTodoForm
+            onSubmit={handleAddTodo}
+            isAddButtonLoading={isAddButtonLoading}
+          />
+        </div>
       </div>
 
-      <div className="flex items-center space-x-2 self-center mt-10">
+      <div className="flex items-center space-x-2 self-center justify-center mt-10">
         <Switch
           id="only-completed"
           checked={showCompleted}
@@ -164,7 +168,7 @@ export default function Dashboard() {
             <LoadingState />
           </div>
         ) : (
-          <div className="w-3/4 md:w-1/2 flex flex-col gap-6">
+          <div className="w-[88%] md:w-1/2 flex flex-col gap-6">
             {todos.length > 0 ? (
               todos.map((todo) => (
                 <div
@@ -237,6 +241,8 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }

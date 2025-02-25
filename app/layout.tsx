@@ -1,6 +1,7 @@
 import {
   ClerkProvider,
   SignInButton,
+  SignUpButton,
   SignedIn,
   SignedOut,
   UserButton,
@@ -48,15 +49,18 @@ export default function RootLayout({
             defaultTheme="dark"
             enableSystem
             disableTransitionOnChange>
-            <header className="flex justify-between items-center p-8 h-20">
+            <header className="flex justify-between items-center p-4 md:p-8 h-20">
               <Link href="/" className="font-black">
                 Todo by Loay
               </Link>
-              <div className="flex justify-end items-center gap-4">
+              <div className="flex justify-end items-center gap-2 md:gap-4">
                 <ModeToggle />
                 <SignedOut>
                   <Button variant="outline" asChild>
                     <SignInButton forceRedirectUrl={"/dashboard"} />
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <SignUpButton forceRedirectUrl={"/dashboard"} />
                   </Button>
                 </SignedOut>
                 <SignedIn>

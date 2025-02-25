@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { string, z } from "zod";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";

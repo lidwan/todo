@@ -16,7 +16,7 @@ import { dark } from "@clerk/themes";
 export const metadata = {
   title: "Todo By Loay",
   description: "A simple Todo web app.",
-  creator: 'Loay Idwan',
+  creator: "Loay Idwan",
   openGraph: {
     title: "Todo By Loay",
     siteName: "Todo By Loay",
@@ -25,12 +25,12 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: 'https://todo.loayidwan.com/todo.png',
+        url: "https://todo.loayidwan.com/todo.png",
         width: 1200,
         height: 630,
-        alt: "Website for A simple Todo web app."
-      }
-    ]
+        alt: "Website for A simple Todo web app.",
+      },
+    ],
   },
   canonical: "https://todo.loayidwan.com",
 };
@@ -50,7 +50,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange>
             <header className="flex justify-between items-center p-4 md:p-8 h-20">
-              <Link href="/" >
+              <Link href="/">
                 <p className="text-xl font-black">Todo by Loay</p>
               </Link>
               <div className="flex justify-end items-center gap-2 md:gap-4">
@@ -69,7 +69,7 @@ export default function RootLayout({
                       Dashboard
                     </Link>
                   </Button>
-                  <UserButton  appearance={{ baseTheme: dark }} />
+                  <UserButton appearance={{ baseTheme: dark }} />
                 </SignedIn>
               </div>
             </header>

@@ -15,7 +15,7 @@ import {
 
 interface props {
   currentTodoContent: string;
-  onSubmit: any;
+  onSubmit: (values: { todoContent: string }) => void;
   isEditButtonLoading: boolean;
 }
 

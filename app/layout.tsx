@@ -50,8 +50,8 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange>
             <header className="flex justify-between items-center p-4 md:p-8 h-20">
-              <Link href="/" className="font-black">
-                Todo by Loay
+              <Link href="/" >
+                <p className="text-xl font-black">Todo by Loay</p>
               </Link>
               <div className="flex justify-end items-center gap-2 md:gap-4">
                 <ModeToggle />

@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/ModeToggle";
 import Link from "next/link";
+import { dark } from "@clerk/themes";
 
 export const metadata = {
   title: "Todo By Loay",
@@ -64,7 +65,7 @@ export default function RootLayout({
                       Dashboard
                     </Link>
                   </Button>
-                  <UserButton />
+                  <UserButton  appearance={{ baseTheme: dark }} />
                 </SignedIn>
               </div>
             </header>

@@ -219,9 +219,7 @@ export default function Dashboard() {
                           <Loader2 className="animate-spin" />
                         </div>
                       ) : (
-                        <div className="w-[100%] flex flex-col justify-center items-center">
-                          <DeleteTodoButton />
-                        </div>
+                        <DeleteTodoButton />
                       )}
                     </div>
                   </div>

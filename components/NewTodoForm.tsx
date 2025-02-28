@@ -44,8 +44,7 @@ export function NewTodoForm({
           onSubmit(values);
           form.reset();
         })}
-        className="space-y-4 w-[100%]"
-      >
+        className="space-y-4 w-[100%]">
         <FormField
           control={form.control}
           name="todoContent"

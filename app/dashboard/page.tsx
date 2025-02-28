@@ -53,7 +53,7 @@ export default function Dashboard() {
     if (res.ok) {
       const data = await res.json();
       setTodos(
-        data.toReversed().sort((a: Todo, b: Todo) => {
+        data.sort((a: Todo, b: Todo) => {
           if (a.is_completed !== b.is_completed) {
             return Number(a.is_completed) - Number(b.is_completed);
           }

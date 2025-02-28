@@ -40,8 +40,12 @@ export function NewTodoForm({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 w-[100%]">
+        onSubmit={form.handleSubmit((values) => {
+          onSubmit(values);
+          form.reset();
+        })}
+        className="space-y-4 w-[100%]"
+      >
         <FormField
           control={form.control}
           name="todoContent"

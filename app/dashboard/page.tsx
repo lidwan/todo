@@ -55,10 +55,13 @@ export default function Dashboard() {
       setTodos(
         data
           .toReversed()
-          .sort(
-            (a: Todo, b: Todo) =>
-              Number(a.is_completed) - Number(b.is_completed)
-          )
+          .sort((a: Todo, b: Todo) => {
+            if (a.is_completed !== b.is_completed) {
+              return Number(a.is_completed) - Number(b.is_completed);
+            }
+          
+            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+          })          
       );
     } else {
       console.error("Failed to fetch todos");

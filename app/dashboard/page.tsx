@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { NewTodoForm } from "@/components/NewTodoForm";
-import LoadingState from "@/components/LoadingState";
-import DeleteTodoButton from "@/components/DeleteTodoButton.";
-import { toHumanReadbleDate } from "@/lib/toHumanReadbleDate";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Loader2 } from "lucide-react";
 import CompleteTodoButton from "@/components/CompleteTodoButton";
+import DeleteTodoButton from "@/components/DeleteTodoButton.";
 import EditTodoButton from "@/components/EditTodoButton";
 import Footer from "@/components/Footer";
+import LoadingState from "@/components/LoadingState";
+import { NewTodoForm } from "@/components/NewTodoForm";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { toHumanReadbleDate } from "@/lib/toHumanReadbleDate";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface Todo {
   uuid: string;
@@ -53,15 +53,9 @@ export default function Dashboard() {
     if (res.ok) {
       const data = await res.json();
       setTodos(
-        data.sort((a: Todo, b: Todo) => {
-          if (a.is_completed !== b.is_completed) {
-            return Number(a.is_completed) - Number(b.is_completed);
-          }
-
-          return (
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-          );
-        })
+        data.sort(
+          (a: Todo, b: Todo) => Number(a.is_completed) - Number(b.is_completed)
+        )
       );
     } else {
       console.error("Failed to fetch todos");

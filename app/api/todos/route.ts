@@ -23,7 +23,8 @@ export async function GET() {
   const { data, error } = await supabase
     .from("todos")
     .select("*")
-    .eq("auth_id", userId);
+    .eq("auth_id", userId)
+    .order("created_at", {ascending: false});
 
   if (error)
     return NextResponse.json({ error: error.message }, { status: 400 });
